@@ -6,10 +6,10 @@ a cdn to render github issues to images, so it can be embed into github's readme
 
 -   example used: [#4](https://github.com/xNaCly/better-issues/issues/1)
 
-compact:
+### compact:
 
 <img src="https://cdn.discordapp.com/attachments/638844015084568597/756826093440204820/render_issue.png">
 
-default:
+### default:
 
 <img src="https://cdn.discordapp.com/attachments/638844015084568597/756825268496236635/render_issue.png">
