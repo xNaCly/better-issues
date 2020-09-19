@@ -11,8 +11,6 @@ const md = markdownit();
 md.use(taskLists, { enabled: true });
 
 const fs = require("fs");
-const file_default = fs.readFileSync(__dirname + "/html/render.html");
-const file_compact = fs.readFileSync(__dirname + "/html/compact.html");
 
 async function rendertext(type, issue_object) {
 	try {
@@ -50,7 +48,6 @@ async function rendertext(type, issue_object) {
 				},
 			});
 
-			// Datestring --> day. month
 			created_at = new Date(created_at).toUTCString().slice(5, 11).replace(" ", ". ");
 
 			//replace commit url with first 7 chars like its done in githubissues
@@ -68,22 +65,19 @@ async function rendertext(type, issue_object) {
 					body = body.replace(text, `<s>${text.replace("~", "")}</s>`);
 				}
 			}
-			
-			//replace sampletexts with corresponding values
-			let content = file_default.toString().replace("SAMPLE_TEXT", md.render(body));
-			content = content.replace("SAMPLE_HEADER", `<h3>${title} [<a href="#">#${number}</a>]:</h3><h4>`);
-			content = content.replace("SAMPLE_INFO", `${user.login} opened this issue on ${created_at}</h4>\n\n`);
 
-			//depending on state of issue display state icon and text
-			if (state == "closed") {
-				content = content.replace("default_class_closed", "span_closed_issue");
-			} else if (state == "open") {
-				content = content.replace("default_class_opened", "span_opened_issue");
-			}
-
+			let title_text = `<h3 id="title_text">${title} [<a href="#">#${number}</a>]:</h3>`;
+			let info_text = `${user.login} opened this issue on ${created_at}\n\n`;
+			let url = html_url.split("github.com")[1].split("/issues")[0].slice(1);
 			const browser = await puppeteer.launch();
 			const page = await browser.newPage();
-			await page.setContent(content);
+			let file_default = `file:///${__dirname}/html/render.html?state=${encodeURIComponent(
+				state
+			)}&header=${encodeURIComponent(title_text)}&info=${encodeURIComponent(info_text)}&text=${encodeURIComponent(
+				md.render(body)
+			)}&url=${encodeURIComponent(url)}`;
+			console.log(file_default);
+			await page.goto(file_default);
 			await page.addStyleTag({ path: __dirname + "/html/style.css" });
 
 			await page.addStyleTag({

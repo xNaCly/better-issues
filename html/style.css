@@ -3,7 +3,11 @@ body {
 	font-weight: 600;
 	color: #24292e;
 }
-
+#title_text {
+	font-weight: 600;
+	margin: 0 auto;
+	padding-bottom: 5px;
+}
 .class_closed_svg,
 .class_open_svg {
 	color: white;
@@ -36,6 +40,19 @@ body {
 	padding-bottom: 2px;
 	border-radius: 2em;
 	text-align: center;
+}
+#center_icon_and_info {
+	display: flex;
+	align-items: center;
+	justify-content: left;
+}
+#header_div {
+	border: 1px solid #d1d5da;
+	border-radius: 6px;
+	height: 100px;
+	padding-top: 15px;
+	padding-left: 15px;
+	width: 70%;
 }
 .default_class_closed,
 .default_class_opened {
@@ -104,4 +121,8 @@ body {
 	font-size: 70%;
 	margin: 0 auto;
 	color: #586069;
+}
+#info {
+	color: #586069;
+	font-weight: 500;
 }
