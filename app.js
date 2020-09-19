@@ -18,29 +18,31 @@ async function rendertext(type, issue_object) {
 	try {
 		var { number, title, body, user, labels, state, created_at, html_url } = issue_object;
 		if (type == "compact") {
+			// Datestring --> day. month
 			created_at = new Date(created_at).toUTCString().slice(5, 11).replace(" ", ". ");
+
+			//replace sampletexts with corresponding values
 			content = file_compact.toString().replace("&nbsp;SAMPLE_TITLE", `&nbsp;${title}`);
 			content = content.replace("SAMPLE_TEXT", `#${number} opened on ${created_at} by ${user.login}`);
 			content = content.replace("REPO_URL", `${html_url.split("github.com")[1].split("/issues")[0].slice(1)}`);
+
+			//depending on state of issue display state icon and text
 			if (state == "closed") {
 				content = content.replace("default_class_closed", "span_closed_compact");
 			} else if (state == "open") {
 				content = content.replace("default_class_opened", "span_opened_compact");
 			}
+
 			const browser = await puppeteer.launch();
 			const page = await browser.newPage();
 			await page.setContent(content);
 			await page.addStyleTag({ path: __dirname + "/html/style.css" });
-			// await page.addStyleTag({
-			// 	url: "https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css",
-			// });
 			await page.setViewport({ width: 420, height: 120 });
 			let image = await page.screenshot({ fullPage: true });
 
 			await browser.close();
 			return image;
 		} else {
-			/*|--> DONE DONT CHANGE <--|*/
 			md.configure({
 				options: {
 					html: true,
@@ -52,24 +54,32 @@ async function rendertext(type, issue_object) {
 					maxNesting: 100,
 				},
 			});
+
+			// Datestring --> day. month
 			created_at = new Date(created_at).toUTCString().slice(5, 11).replace(" ", ". ");
 
+			//replace commit url with first 7 chars like its done in githubissues
 			let commits = body.match(/(https:\/\/github.com\/.*\/.*\/commit\/)(.*)/g);
 			if (commits) {
 				for (commit of commits) {
 					body = body.replace(commit, `\`${commit.split("/commit/")[1].slice(0, 7)}\``);
 				}
 			}
+
+			// md = ~texttostrike~ //html = <s>texttostrike</s>
 			let strike = body.match(/~(.*?)~/g);
 			if (strike) {
 				for (text of strike) {
 					body = body.replace(text, `<s>${text.replace("~", "")}</s>`);
 				}
 			}
+
+			//replace sampletexts with corresponding values
 			let content = file_default.toString().replace("SAMPLE_TEXT", md.render(body));
 			content = content.replace("SAMPLE_HEADER", `<h3>${title} [<a href="#">#${number}</a>]:</h3><h4>`);
 			content = content.replace("SAMPLE_INFO", `${user.login} opened this issue on ${created_at}</h4>\n\n`);
 
+			//depending on state of issue display state icon and text
 			if (state == "closed") {
 				content = content.replace("default_class_closed", "span_closed_issue");
 			} else if (state == "open") {
@@ -80,12 +90,15 @@ async function rendertext(type, issue_object) {
 			const page = await browser.newPage();
 			await page.setContent(content);
 			await page.addStyleTag({ path: __dirname + "/html/style.css" });
+
 			await page.addStyleTag({
 				url: "https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css",
 			});
+
 			await page.addStyleTag({
 				content: "@page { size: auto; }",
 			});
+
 			let image = await page.screenshot({ fullPage: true });
 
 			await browser.close();
@@ -100,6 +113,7 @@ app.get("/render_issue", async (req, res) => {
 	var { issue, type } = req.query;
 	if (!issue) throw "no query given";
 	if (!type) type = "default";
+
 	resp = await fetch("https://api.github.com/repos/" + issue.split("github.com/")[1]);
 	issue = await resp.json();
 
