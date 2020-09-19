@@ -16,5 +16,5 @@ a cdn to render github issues to images, so it can be embed into github's readme
 
 ### default:
 <kbd>
-  <img src="https://cdn.discordapp.com/attachments/638844015084568597/756825268496236635/render_issue.png">
+  <img src="https://cdn.discordapp.com/attachments/638844015084568597/756874830531395654/render_issue.png">
 </kbd>
