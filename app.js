@@ -12,6 +12,12 @@ md.use(taskLists, { enabled: true });
 
 const fs = require("fs");
 
+function log(endpoint, type, query, time) {
+	console.log(
+		`[${new Date().toTimeString().slice(0, 8)}] ${endpoint} [${type}] ${JSON.stringify(query)} | ${time}`
+	);
+}
+
 async function rendertext(type, issue_object) {
 	try {
 		var { number, title, body, user, labels, state, created_at, html_url } = issue_object;
@@ -76,7 +82,6 @@ async function rendertext(type, issue_object) {
 			)}&header=${encodeURIComponent(title_text)}&info=${encodeURIComponent(info_text)}&text=${encodeURIComponent(
 				md.render(body)
 			)}&url=${encodeURIComponent(url)}`;
-			console.log(file_default);
 			await page.goto(file_default);
 			await page.addStyleTag({ path: __dirname + "/html/style.css" });
 
@@ -99,14 +104,16 @@ async function rendertext(type, issue_object) {
 }
 
 app.get("/render_issue", async (req, res) => {
+	let begin_ = Date.now();
 	var { issue, type } = req.query;
 	if (!issue) throw "no query given";
 	if (!type) type = "default";
-
 	resp = await fetch("https://api.github.com/repos/" + issue.split("github.com/")[1]);
 	issue = await resp.json();
 
 	let image = await rendertext(type, issue);
+	let ending_ = Date.now();
+	log("/render_issues", "GET", req.query, (ending_ - begin_) / 1000 + "secs");
 	res.writeHead(200, {
 		"Content-Type": "image/png",
 	});
