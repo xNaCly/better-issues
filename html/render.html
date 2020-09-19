@@ -43,7 +43,6 @@
 				infodict[query_item[0]] = decodeURIComponent(query_item[1]);
 			}
 			let { state, text, info, header, url } = infodict;
-			console.log(infodict);
 			if (state == "closed") {
 				document.getElementById("status_closed").classList.remove("default_class_closed");
 				document.getElementById("status_closed").classList.add("span_closed_issue");
