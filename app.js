@@ -18,24 +18,19 @@ async function rendertext(type, issue_object) {
 	try {
 		var { number, title, body, user, labels, state, created_at, html_url } = issue_object;
 		if (type == "compact") {
-			// Datestring --> day. month
 			created_at = new Date(created_at).toUTCString().slice(5, 11).replace(" ", ". ");
+			html_url = html_url.split("github.com")[1].split("/issues")[0].slice(1);
 
-			//replace sampletexts with corresponding values
-			content = file_compact.toString().replace("&nbsp;SAMPLE_TITLE", `&nbsp;${title}`);
-			content = content.replace("SAMPLE_TEXT", `#${number} opened on ${created_at} by ${user.login}`);
-			content = content.replace("REPO_URL", `${html_url.split("github.com")[1].split("/issues")[0].slice(1)}`);
-
-			//depending on state of issue display state icon and text
-			if (state == "closed") {
-				content = content.replace("default_class_closed", "span_closed_compact");
-			} else if (state == "open") {
-				content = content.replace("default_class_opened", "span_opened_compact");
-			}
-
+			let text_param = `#${number} opened on ${created_at} by ${user.login}`;
 			const browser = await puppeteer.launch();
 			const page = await browser.newPage();
-			await page.setContent(content);
+
+			await page.goto(
+				`file:///${__dirname}/html/compact.html?title=${encodeURIComponent(title)}&text=${encodeURIComponent(
+					text_param
+				)}&state=${state}&url=${encodeURIComponent(html_url)}`
+			);
+
 			await page.addStyleTag({ path: __dirname + "/html/style.css" });
 			await page.setViewport({ width: 420, height: 120 });
 			let image = await page.screenshot({ fullPage: true });
@@ -73,7 +68,7 @@ async function rendertext(type, issue_object) {
 					body = body.replace(text, `<s>${text.replace("~", "")}</s>`);
 				}
 			}
-
+			
 			//replace sampletexts with corresponding values
 			let content = file_default.toString().replace("SAMPLE_TEXT", md.render(body));
 			content = content.replace("SAMPLE_HEADER", `<h3>${title} [<a href="#">#${number}</a>]:</h3><h4>`);

@@ -10,7 +10,7 @@
 		<div class="tab-content markdown-body" id="myTabContent">
 			<div class="compact-div">
 				<div class="main-text">
-					<h5 id="text_small">REPO_URL</h5>
+					<h5 id="text_small"></h5>
 				</div>
 				<span class="svg_grabber_span">
 					<svg class="svg_grabber" width="16" height="16">
@@ -19,13 +19,13 @@
 							d="M10 13a1 1 0 100-2 1 1 0 000 2zm-4 0a1 1 0 100-2 1 1 0 000 2zm1-5a1 1 0 11-2 0 1 1 0 012 0zm3 1a1 1 0 100-2 1 1 0 000 2zm1-5a1 1 0 11-2 0 1 1 0 012 0zM6 5a1 1 0 100-2 1 1 0 000 2z"
 						></path>
 					</svg>
-					&nbsp;SAMPLE_TITLE
+					&nbsp;
 				</span>
 				<div class="main-text">
-					<h5 id="text">SAMPLE_TEXT</h5>
+					<h5 id="text"></h5>
 				</div>
 				<div class="issue-cointainer">
-					<span title="Status: SAMPLE_STATUS" class="default_class_opened"
+					<span id="status_open" class="default_class_opened"
 						><svg
 							height="16"
 							viewBox="0 0 16 16"
@@ -40,7 +40,7 @@
 						</svg>
 						&nbsp;Open
 					</span>
-					<span title="Status: SAMPLE_STATUS" class="default_class_closed">
+					<span id="status_closed" class="default_class_closed">
 						<svg
 							height="16"
 							viewBox="0 0 16 16"
@@ -58,5 +58,22 @@
 				</div>
 			</div>
 		</div>
+		<script>
+			let query = window.location.search.toString().slice(1).split("&");
+			let infodict = {};
+			for (let query_item in query) {
+				query_item = query[query_item].split("=");
+				infodict[query_item[0]] = decodeURIComponent(query_item[1]);
+			}
+			let { state, text, title, url } = infodict;
+			if (state == "closed") {
+				document.getElementById("status_closed").classList.add("span_closed_compact");
+			} else if (state == "open") {
+				document.getElementById("status_open").classList.add("span_opened_compact");
+			}
+			document.getElementById("text_small").innerHTML = url;
+			document.getElementsByClassName("svg_grabber_span")[0].innerHTML += title;
+			document.getElementById("text").innerHTML = text;
+		</script>
 	</body>
 </html>
