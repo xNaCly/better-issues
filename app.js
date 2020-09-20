@@ -25,7 +25,7 @@ async function rendertext(type, issue_object) {
 
 			let text_param = `#${number} opened on ${created_at} by ${user.login}`;
 			const browser = await puppeteer.launch({
-				args: ["--no-sandbox", "--disable-setuid-sandbox"],
+				args: ["--no-sandbox"],
 			});
 			const page = await browser.newPage();
 
@@ -77,7 +77,7 @@ async function rendertext(type, issue_object) {
 			let url = html_url.split("github.com")[1].split("/issues")[0].slice(1);
 			const browser = await puppeteer.launch();
 			const page = await browser.newPage({
-				args: ["--no-sandbox", "--disable-setuid-sandbox"],
+				args: ["--no-sandbox"],
 			});
 			let file_default = `file:///${__dirname}/html/render.html?state=${encodeURIComponent(
 				state
