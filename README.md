@@ -8,13 +8,13 @@ a cdn to render github issues to images, so it can be embed into github's readme
 
 ## What it looks like:
 
--   example used: [#4](https://github.com/xNaCly/better-issues/issues/1)
+-   example used: [#1](https://github.com/xNaCly/better-issues/issues/1)
 
 ### Compact:
 
-<img src="https://cdn.discordapp.com/attachments/638844015084568597/756826093440204820/render_issue.png">
+<img src="https://better-issues.herokuapp.com/render_issue?issue=https://github.com/xNaCly/better-issues/issues/1&type=compact">
 
 ### Default:
 <kbd>
-  <img src="https://cdn.discordapp.com/attachments/638844015084568597/756874830531395654/render_issue.png">
+  <img src="https://better-issues.herokuapp.com/render_issue?issue=https://github.com/xNaCly/better-issues/issues/1">
 </kbd>
