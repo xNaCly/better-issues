@@ -13,9 +13,7 @@ md.use(taskLists, { enabled: true });
 const fs = require("fs");
 
 function log(endpoint, type, query, time) {
-	console.log(
-		`[${new Date().toTimeString().slice(0, 8)}] ${endpoint} [${type}] ${JSON.stringify(query)} | ${time}`
-	);
+	console.log(`[${new Date().toTimeString().slice(0, 8)}] ${endpoint} [${type}] ${JSON.stringify(query)} | ${time}`);
 }
 
 async function rendertext(type, issue_object) {
@@ -98,8 +96,8 @@ async function rendertext(type, issue_object) {
 			await browser.close();
 			return image;
 		}
-	} catch {
-		throw "issue not found";
+	} catch (e) {
+		throw "issue not found" + e;
 	}
 }
 
