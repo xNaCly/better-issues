@@ -120,7 +120,7 @@ app.get("/render_issue", async (req, res) => {
 	res.end(image);
 });
 
-app.listen("3000", () => {
+app.listen(process.env.PORT || 3000, () => {
 	console.log(`[${new Date().toTimeString().slice(0, 8)}] Example app listening at http://localhost:3000`);
 });
 
