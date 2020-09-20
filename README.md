@@ -6,6 +6,20 @@
 
 a cdn to render github issues to images, so it can be embed into github's readme
 
+## How to use it:
+```
+|--------> Syntax <--------|
+https://better-issues.herokuapp.com/render_issue
+    ?issue=<issue_url>
+    [&type=compact]
+    
+|--------> Example <--------|
+https://better-issues.herokuapp.com/render_issue
+    ?issue=https://github.com/xNaCly/better-issues/issues/1
+    &type=compact
+    
+```
+
 ## What it looks like:
 
 -   example used: [#1](https://github.com/xNaCly/better-issues/issues/1)
