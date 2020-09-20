@@ -24,7 +24,9 @@ async function rendertext(type, issue_object) {
 			html_url = html_url.split("github.com")[1].split("/issues")[0].slice(1);
 
 			let text_param = `#${number} opened on ${created_at} by ${user.login}`;
-			const browser = await puppeteer.launch();
+			const browser = await puppeteer.launch({
+				args: ["--no-sandbox", "--disable-setuid-sandbox"],
+			});
 			const page = await browser.newPage();
 
 			await page.goto(
@@ -74,7 +76,9 @@ async function rendertext(type, issue_object) {
 			let info_text = `${user.login} opened this issue on ${created_at}\n\n`;
 			let url = html_url.split("github.com")[1].split("/issues")[0].slice(1);
 			const browser = await puppeteer.launch();
-			const page = await browser.newPage();
+			const page = await browser.newPage({
+				args: ["--no-sandbox", "--disable-setuid-sandbox"],
+			});
 			let file_default = `file:///${__dirname}/html/render.html?state=${encodeURIComponent(
 				state
 			)}&header=${encodeURIComponent(title_text)}&info=${encodeURIComponent(info_text)}&text=${encodeURIComponent(
