@@ -75,10 +75,10 @@ async function rendertext(type, issue_object) {
 			let title_text = `<h3 id="title_text">${title} [<a href="#">#${number}</a>]:</h3>`;
 			let info_text = `${user.login} opened this issue on ${created_at}\n\n`;
 			let url = html_url.split("github.com")[1].split("/issues")[0].slice(1);
-			const browser = await puppeteer.launch();
-			const page = await browser.newPage({
+			const browser = await puppeteer.launch({
 				args: ["--no-sandbox", "--disable-setuid-sandbox"],
 			});
+			const page = await browser.newPage();
 			let file_default = `file:///${__dirname}/html/render.html?state=${encodeURIComponent(
 				state
 			)}&header=${encodeURIComponent(title_text)}&info=${encodeURIComponent(info_text)}&text=${encodeURIComponent(
