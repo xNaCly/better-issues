@@ -118,6 +118,7 @@ app.get("/render_issue", async (req, res) => {
 	log("/render_issues", "GET", req.query, (ending_ - begin_) / 1000 + "secs");
 	res.writeHead(200, {
 		"Content-Type": "image/png",
+		"Cache-Control": "no-cache"
 	});
 	res.end(image);
 });
