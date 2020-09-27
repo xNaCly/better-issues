@@ -20,6 +20,16 @@ https://better-issues.herokuapp.com/render_issue
     
 ```
 
+## What it looks like:
+
+-   example used: [#1](https://github.com/xNaCly/better-issues/issues/1)
+
+### Compact:
+
+<img src="https://better-issues.herokuapp.com/render_issue?issue=https://github.com/xNaCly/better-issues/issues/1&type=compact">
+
+
+
 ### Default:
 <kbd>
   <img src="https://better-issues.herokuapp.com/render_issue?issue=https://github.com/xNaCly/better-issues/issues/1">
