@@ -1,3 +1,8 @@
+@font-face {
+	font-family: "Segoe UI";
+	src: url("./Segoe\ UI.ttf");
+}
+
 body {
 	font-family: "Segoe UI";
 	font-weight: 600;
