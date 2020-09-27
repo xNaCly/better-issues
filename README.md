@@ -22,15 +22,15 @@ https://better-issues.herokuapp.com/render_issue
 
 ## What it looks like:
 
--   example used: [#1](https://github.com/xNaCly/better-issues/issues/1)
+-   example used: [#1](https://github.com/xNaCly/better-issues/issues/3)
 
 ### Compact:
 
-<img src="https://better-issues.herokuapp.com/render_issue?issue=https://github.com/xNaCly/better-issues/issues/1&type=compact">
+<img src="https://better-issues.herokuapp.com/render_issue?issue=https://github.com/xNaCly/better-issues/issues/3&type=compact">
 
 
 
 ### Default:
 <kbd>
-  <img src="https://better-issues.herokuapp.com/render_issue?issue=https://github.com/xNaCly/better-issues/issues/1">
+  <img src="https://better-issues.herokuapp.com/render_issue?issue=https://github.com/xNaCly/better-issues/issues/3">
 </kbd>
