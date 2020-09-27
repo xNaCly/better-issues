@@ -26,11 +26,11 @@ https://better-issues.herokuapp.com/render_issue
 
 ### Compact:
 
-<img src="https://better-issues.herokuapp.com/render_issue?issue=https://github.com/xNaCly/better-issues/issues/3&type=compact">
+<img src="https://better-issues.herokuapp.com/render_issue?issue=https://github.com/xNaCly/better-issues/issues/1&type=compact">
 
 
 
 ### Default:
 <kbd>
-  <img src="https://better-issues.herokuapp.com/render_issue?issue=https://github.com/xNaCly/better-issues/issues/3">
+  <img src="https://better-issues.herokuapp.com/render_issue?issue=https://github.com/xNaCly/better-issues/issues/1">
 </kbd>
