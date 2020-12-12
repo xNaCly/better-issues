@@ -25,12 +25,13 @@ https://better-issues.herokuapp.com/render_issue
 -   example used: [#1](https://github.com/xNaCly/better-issues/issues/3)
 
 ### Compact:
-
+[api-link](https://better-issues.herokuapp.com/render_issue?issue=https://github.com/xNaCly/better-issues/issues/1&type=compact)
 <img src="https://better-issues.herokuapp.com/render_issue?issue=https://github.com/xNaCly/better-issues/issues/1&type=compact">
 
 
 
 ### Default:
+[api-link](https://better-issues.herokuapp.com/render_issue?issue=https://github.com/xNaCly/better-issues/issues/1&type=compact)
 <kbd>
   <img src="https://better-issues.herokuapp.com/render_issue?issue=https://github.com/xNaCly/better-issues/issues/1">
 </kbd>
