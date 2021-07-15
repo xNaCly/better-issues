@@ -21,7 +21,7 @@ function log(endpoint, type, query, time) {
 	);
 }
 
-async function rendertext(type, issue_object) {
+async function renderIssue(type, issue_object) {
 	try {
 		let { number, title, body, user, labels, state, created_at, html_url } =
 			issue_object;
@@ -51,7 +51,11 @@ async function rendertext(type, issue_object) {
 			);
 
 			await page.addStyleTag({ path: __dirname + "/html/style.css" });
-			await page.setViewport({ width: 420, height: 120 });
+			await page.setViewport({
+				width: 420,
+				height: 120,
+				deviceScaleFactor: 2,
+			});
 			let image = await page.screenshot({ fullPage: true });
 
 			await browser.close();
@@ -135,22 +139,104 @@ async function rendertext(type, issue_object) {
 	}
 }
 
+async function renderReadme(readme_content, density) {
+	try {
+		md.configure({
+			options: {
+				html: true,
+				xhtmlOut: true,
+				breaks: true,
+				langPrefix: "language-",
+				linkify: true,
+				typographer: true,
+				maxNesting: 100,
+			},
+		});
+
+		// md = ~texttostrike~ //html = <s>texttostrike</s>
+		let strike = readme_content.match(/~(.*?)~/g);
+		if (strike) {
+			for (text of strike) {
+				readme_content = readme_content.replace(
+					text,
+					`<s>${text.replace("~", "")}</s>`
+				);
+			}
+		}
+
+		const browser = await puppeteer.launch({
+			// options: {
+			// 	defaultViewport: {
+			// 		deviceScaleFactor: 3,
+			// 	},
+			// },
+			args: ["--no-sandbox", "--disable-setuid-sandbox"],
+		});
+
+		const page = await browser.newPage();
+
+		let file_default = `file:///${__dirname}/html/readme.html?content=${encodeURIComponent(
+			md.render(readme_content)
+		)}`;
+
+		await page.goto(file_default);
+		await page.addStyleTag({ path: __dirname + "/html/style.css" });
+
+		await page.addStyleTag({
+			url: "https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/4.0.0/github-markdown.min.css",
+		});
+
+		await page.addStyleTag({
+			content: "@page { size: auto; }",
+		});
+
+		let image = await page.screenshot({ fullPage: true });
+
+		await browser.close();
+		return image;
+	} catch (e) {
+		throw "readme not found" + e;
+	}
+}
+
 app.get("/render_issue", async (req, res) => {
 	const begin = Date.now();
 	let { issue, type } = req.query;
-	if (!issue) throw "no query given";
+	if (!issue) throw "no issue link given";
 
-	type ?? type == "default";
-
-	resp = await fetch(
+	const resp = await fetch(
 		"https://api.github.com/repos/" + issue.split("github.com/")[1]
 	);
 	issue = await resp.json();
 
-	const image = await rendertext(type, issue);
+	const image = await renderIssue(type, issue);
 	const ending = Date.now();
 
 	log("/render_issues", "GET", req.query, (ending - begin) / 1000 + "secs");
+
+	res.writeHead(200, {
+		"Content-Type": "image/png",
+		"Cache-Control": "no-cache",
+	});
+	res.end(image);
+});
+
+app.get("/render_readme", async (req, res) => {
+	const begin = Date.now();
+	let { link } = req.query;
+	if (!link) throw "no repo link given";
+
+	const resp = await fetch(
+		link
+			.replace("github.com", "raw.githubusercontent.com")
+			.replace("blob/", "")
+	);
+	readme = await resp.text();
+
+	const image = await renderReadme(readme);
+	const ending = Date.now();
+
+	log("/render_readme", "GET", req.query, (ending - begin) / 1000 + "secs");
 
 	res.writeHead(200, {
 		"Content-Type": "image/png",

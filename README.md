@@ -7,17 +7,24 @@
 a cdn to render github issues to images, so it can be embed into github's readme
 
 ## How to use it:
+
 ```
 |--------> Syntax <--------|
 https://better-issues.herokuapp.com/render_issue
     ?issue=<issue_url>
     [&type=compact]
-    
+
+https://better-issues.herokuapp.com/render_readme
+    ?link=<readme_url>
+
 |--------> Example <--------|
 https://better-issues.herokuapp.com/render_issue
     ?issue=https://github.com/xNaCly/better-issues/issues/1
     &type=compact
-    
+
+https://better-issues.herokuapp.com/render_readme
+    ?link=https://github.com/xNaCly/xNaCly/blob/master/README.md
+
 ```
 
 ## What it looks like:
@@ -25,15 +32,23 @@ https://better-issues.herokuapp.com/render_issue
 -   example used: [#1](https://github.com/xNaCly/better-issues/issues/3)
 
 ### Compact:
+
 [api-link](https://better-issues.herokuapp.com/render_issue?issue=https://github.com/xNaCly/better-issues/issues/1&type=compact)
 
 <img src="https://better-issues.herokuapp.com/render_issue?issue=https://github.com/xNaCly/better-issues/issues/1&type=compact">
 
-
-
 ### Default:
+
 [api-link](https://better-issues.herokuapp.com/render_issue?issue=https://github.com/xNaCly/better-issues/issues/1)
 
 <kbd>
   <img src="https://better-issues.herokuapp.com/render_issue?issue=https://github.com/xNaCly/better-issues/issues/1">
+</kbd>
+
+## Readme:
+
+[api-link]("https://better-issues.herokuapp.com/render_readme?link=https://github.com/xNaCly/xNaCly/blob/master/README.md")
+
+<kbd>
+  <img src="https://better-issues.herokuapp.com/render_readme?link=https://github.com/xNaCly/xNaCly/blob/master/README.md">
 </kbd>

@@ -1,0 +1,21 @@
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Document</title>
+		<link rel="stylesheet" href="style.css" />
+	</head>
+	<body>
+		<ul class="nav nav-tabs" id="myTab" role="tablist"></ul>
+		<div class="tab-content markdown-body" id="myTabContent"></div>
+		<script>
+			let query = window.location.search.toString().slice(1).split("&");
+			let dict = {};
+			for (let query_item in query) {
+				query_item = query[query_item].split("=");
+				dict[query_item[0]] = decodeURIComponent(query_item[1]);
+			}
+			document.getElementById("myTabContent").innerHTML = dict.content;
+		</script>
+	</body>
+</html>
