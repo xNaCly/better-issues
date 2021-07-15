@@ -47,7 +47,7 @@ https://better-issues.herokuapp.com/render_readme
 
 ## Readme:
 
-[api-link]("https://better-issues.herokuapp.com/render_readme?link=https://github.com/xNaCly/xNaCly/blob/master/README.md")
+[api-link](https://better-issues.herokuapp.com/render_readme?link=https://github.com/xNaCly/xNaCly/blob/master/README.md)
 
 <kbd>
   <img src="https://better-issues.herokuapp.com/render_readme?link=https://github.com/xNaCly/xNaCly/blob/master/README.md">
